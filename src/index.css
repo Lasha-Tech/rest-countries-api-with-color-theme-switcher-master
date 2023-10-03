@@ -6,13 +6,247 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  width: 100%;
-  height: 100%;
-}
+@media (min-width: 375px) {
+  .App {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
 
-#root {
-  width: 100%;
-  height: 100%;
+  .header {
+    width: 100%;
+    height: 80px;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+
+  .title {
+    font-family: 'Nunito Sans';
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 20px;
+  }
+
+  .day-night-div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .moon path {
+    fill: #FFF;
+  }
+
+  .daynight {
+    font-family: 'Nunito Sans';
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 65px;
+  }
+
+  .input-div {
+    width: 100%;
+    height: 48px;
+    padding: 16px 32px;
+    display: flex;
+    gap: 26px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 9px 0px rgba(0, 0, 0, 0.05);
+  }
+
+  .search-div svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .filter-div {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .filter-container {
+    margin-top: 40px;
+    width: 65%;
+    height: max-content;
+    position: relative;
+    z-index: 2;
+  }
+
+  .filter {
+    width: 100%;
+    height: 48px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 9px 0px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 19px 14px 24px;
+    margin-bottom: 4px;
+  }
+
+  .region {
+    font-family: 'Nunito Sans';
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+
+  .filter svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .region-list-item {
+    font-family: 'Nunito Sans';
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+  }
+
+  .countries-container {
+    width: 90%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    position: absolute;
+    z-index: 0;
+    top: 285px;
+  }
+
+  .country {
+    width: 80%;
+    height: 325px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+  }
+
+  .country img {
+    width: 100%;
+    height: 140px;
+    border-radius: 5px 5px 0 0;
+  }
+
+  .about-div {
+    width: 100%;
+    height: 57%;
+  }
+
+  .about {
+    margin-top: 24px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 0 24px;
+  } 
+
+  .about h1 {
+    text-align: left;
+    font-family: 'Nunito Sans';
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 26px;
+    margin-bottom: 8px;
+  }
+
+  .country-home {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 24px 62px;
+  }
+
+  .back {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    border-radius: 2px;
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.29);
+    padding: 7px 24px;
+  }
+
+  .back p {
+    font-family: 'Nunito Sans';
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .country-flag {
+    width: 100%;
+    height: 230px;
+    margin: 64px 0 54px;
+  }
+
+  .country-name {
+    font-family: 'Nunito Sans';
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .country-header,
+  .country-main {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .country-main {
+    margin-top: 32px;
+  }
+
+  .country-footer {
+    margin-top: 34px;
+  }
+
+  .border-countries-title {
+    font-family: 'Nunito Sans';
+    font-weight: 600;
+    line-height: 24px;
+    margin-bottom: 16px;
+    font-size: 18px;
+  }
+
+  .border-countries-container {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .border-countries {
+    height: 28px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 30px;
+  }
+
+  .border-countries {
+    font-family: 'Nunito Sans';
+    font-size: 14px;
+  }
 }
