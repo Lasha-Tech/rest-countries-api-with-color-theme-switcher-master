@@ -1,9 +1,13 @@
 import styled, { css } from "styled-components";
+import { Link, useParams } from "react-router-dom";
 
 const Country = ({ day }) => {
+  const {name} = useParams();
+
   return (
     <div className="country-home">
       {/* Back Button  */}
+      <Link to='/Home'>
       <div
         className="back"
         style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
@@ -23,6 +27,7 @@ const Country = ({ day }) => {
         </svg>
         <p style={{ color: day ? "#111517" : "#FFF" }}>Back</p>
       </div>
+      </Link>
 
       {/* Flag  */}
       <img

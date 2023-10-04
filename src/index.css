@@ -251,4 +251,11 @@
   .result {
     width: 100%;
   }
+
+  .error-message {
+    margin-top: 120px;
+    font-family: 'Nunito Sans';
+    font-size: 24px;
+    font-weight: 800;
+  }
 }
