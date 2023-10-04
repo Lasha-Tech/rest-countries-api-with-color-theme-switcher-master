@@ -1,11 +1,86 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import Country from "./Country";
+import axios from "axios";
 
 function App() {
   const [day, setDay] = useState(true);
   const [region, setRegion] = useState("Filter by Region");
   const [list, setList] = useState(false);
+  const [result, setResult] = useState(true)
+  const [error, setError] = useState(false)
+  const [allRender, setAllRender] = useState(true)
+  const [africaRender, setAfricaRender] = useState(false)
+  const [americaRender, setAmericaRender] = useState(false)
+  const [asiaRender, setAsiaRender] = useState(false)
+  const [europeRender, setEuropeRender] = useState(false)
+  const [oceaniaRender, setOceaniaRender] = useState(false)
+  const [all, setAll] = useState([]);
+
+  // Filter Click Events 
+  const africaRenderClick = () => {
+    setAllRender(false)
+    setAfricaRender(true)
+    setAmericaRender(false)
+    setAsiaRender(false)
+    setEuropeRender(false)
+    setOceaniaRender(false)
+  }
+  const americaRenderClick = () => {
+    setAllRender(false)
+    setAfricaRender(false)
+    setAmericaRender(true)
+    setAsiaRender(false)
+    setEuropeRender(false)
+    setOceaniaRender(false)
+  } 
+  const asiaRenderClick = () => {
+    setAllRender(false)
+    setAfricaRender(false)
+    setAmericaRender(false)
+    setAsiaRender(true)
+    setEuropeRender(false)
+    setOceaniaRender(false)
+  } 
+  const europeRenderClick = () => {
+    setAllRender(false)
+    setAfricaRender(false)
+    setAmericaRender(false)
+    setAsiaRender(false)
+    setEuropeRender(true)
+    setOceaniaRender(false)
+  } 
+  const oceaniaRenderClick = () => {
+    setAllRender(false)
+    setAfricaRender(false)
+    setAmericaRender(false)
+    setAsiaRender(false)
+    setEuropeRender(false)
+    setOceaniaRender(true)
+  } 
+
+
+  const getData = async () => {
+    try {
+      const data = await axios.get('https://restcountries.com/v3.1/all')
+      setAll(data.data);
+
+      console.log(all)
+
+      if(data.status !== 404) {
+        setResult(true)
+        setError(false)
+      }
+    } catch (error) {
+      setResult(false)
+      setError(true)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
 
   return (
     <div
@@ -49,7 +124,7 @@ function App() {
           className="input-div"
           style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
         >
-          <div className="search-div">
+          <div className="search-div" onClick={() => getData()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -67,6 +142,8 @@ function App() {
     </div>
 
         {/* Filter  */}
+        {result && 
+        <div className="result">
         <div className="filter-div">
           <div className="filter-container">
             <div
@@ -96,7 +173,7 @@ function App() {
                 className="region-list-item"
                 style={{ color: day ? "#111517" : "#FFF" }}
                 onClick={() => {
-                  setRegion("Africa"), setList(false);
+                  setRegion("Africa"), africaRenderClick(), setList(false);
                 }}
               >
                 Africa
@@ -105,7 +182,7 @@ function App() {
                 className="region-list-item"
                 style={{ color: day ? "#111517" : "#FFF" }}
                 onClick={() => {
-                  setRegion("America"), setList(false);
+                  setRegion("America"), americaRenderClick(), setList(false);
                 }}
               >
                 America
@@ -114,7 +191,7 @@ function App() {
                 className="region-list-item"
                 style={{ color: day ? "#111517" : "#FFF" }}
                 onClick={() => {
-                  setRegion("Asia"), setList(false);
+                  setRegion("Asia"), asiaRenderClick(), setList(false);
                 }}
               >
                 Asia
@@ -123,7 +200,7 @@ function App() {
                 className="region-list-item"
                 style={{ color: day ? "#111517" : "#FFF" }}
                 onClick={() => {
-                  setRegion("Europe"), setList(false);
+                  setRegion("Europe"), europeRenderClick(), setList(false);
                 }}
               >
                 Europe
@@ -132,7 +209,7 @@ function App() {
                 className="region-list-item"
                 style={{ color: day ? "#111517" : "#FFF" }}
                 onClick={() => {
-                  setRegion("Oceania"), setList(false);
+                  setRegion("Oceania"), oceaniaRenderClick(), setList(false);
                 }}
               >
                 Oceania
@@ -143,12 +220,16 @@ function App() {
 
         {/* Countries */}
         <div className="countries-container">
+        {all.map((country) => {
+          // All 
+          if(allRender) {
+          return (
           <div
-            className="country"
+            className="country" key={Math.random()}
             style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
           >
             <img
-              src="https://s3-alpha-sig.figma.com/img/dfb7/6a9f/4829ccead8b50a47638ac3648f0aec0c?Expires=1697414400&Signature=WBx849ebsKTHmeo66~V3lWXhJ5FTPy14anRNU~Aw47Q6MJhkriYm6qLUop3c85VcJGzwiMjrD-ml8vZuCYjrOrc~3YtNvrEWtNp10~Y3FFgEi7m5XEStmgfVr3ebljeUQZR-LeOVnU6jP~YD2WCbfqKd6K2addTvGQAKhz6sIvYq9dJlkbVV1Cy16W9gwEtC3XD97zm6O8KNlCzmMzfQKzwfMadHS4cqqLw7kZCZyulAd1hvKP8cOu~ZX3fXfAmcrXNJii9pzwbdAO0X0GSDRrJJQVwRe1YDymSzHQCNYLxOgW0EcEpjbLY9g1oqL3qHb3l2S-ngMQimhsUYGtCI0A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+              src={country.flags.png}
               alt="flag"
             />
 
@@ -156,26 +237,215 @@ function App() {
             <div className="about-div">             
               <div className="about">
                 <h1 style={{ color: day ? "#111517" : "#FFF" }}>
-                  United States Of America
+                  {country.name.common}
                 </h1>
                 <CountryInfoDiv>
                   <CountryInfoTitle day={day}>Population:</CountryInfoTitle>
-                  <CountryInfo day={day}>cs</CountryInfo>
+                  <CountryInfo day={day}>{country.population}</CountryInfo>
                 </CountryInfoDiv>
                 
                 <CountryInfoDiv>
                   <CountryInfoTitle day={day}>Region:</CountryInfoTitle>
-                  <CountryInfo day={day}>acas</CountryInfo>
+                  <CountryInfo day={day}>{country.region}</CountryInfo>
                 </CountryInfoDiv>
                 
                 <CountryInfoDiv>
                   <CountryInfoTitle day={day}>Capital:</CountryInfoTitle>
-                  <CountryInfo day={day}>casacs</CountryInfo>
+                  <CountryInfo day={day}>{country.capital}</CountryInfo>
                 </CountryInfoDiv>
               </div>
             </div>
-          </div>
-        </div>
+          </div>)}
+
+          // Africa 
+          else if(africaRender) {
+            if(country.region === 'Africa') {
+              return (
+                <div
+                  className="country" key={Math.random()}
+                  style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
+                >
+                  <img
+                    src={country.flags.png}
+                    alt="flag"
+                  />
+      
+                  {/* Country Information  */}
+                  <div className="about-div">             
+                    <div className="about">
+                      <h1 style={{ color: day ? "#111517" : "#FFF" }}>
+                        {country.name.common}
+                      </h1>
+                      <CountryInfoDiv>
+                        <CountryInfoTitle day={day}>Population:</CountryInfoTitle>
+                        <CountryInfo day={day}>{country.population}</CountryInfo>
+                      </CountryInfoDiv>
+                      
+                      <CountryInfoDiv>
+                        <CountryInfoTitle day={day}>Region:</CountryInfoTitle>
+                        <CountryInfo day={day}>{country.region}</CountryInfo>
+                      </CountryInfoDiv>
+                      
+                      <CountryInfoDiv>
+                        <CountryInfoTitle day={day}>Capital:</CountryInfoTitle>
+                        <CountryInfo day={day}>{country.capital}</CountryInfo>
+                      </CountryInfoDiv>
+                    </div>
+                  </div>
+                </div>)}}
+
+                // America 
+                else if(americaRender) {
+                  if(country.region === 'Americas') {
+                    return (
+                      <div
+                        className="country" key={Math.random()}
+                        style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
+                      >
+                        <img
+                          src={country.flags.png}
+                          alt="flag"
+                        />
+            
+                        {/* Country Information  */}
+                        <div className="about-div">             
+                          <div className="about">
+                            <h1 style={{ color: day ? "#111517" : "#FFF" }}>
+                              {country.name.common}
+                            </h1>
+                            <CountryInfoDiv>
+                              <CountryInfoTitle day={day}>Population:</CountryInfoTitle>
+                              <CountryInfo day={day}>{country.population}</CountryInfo>
+                            </CountryInfoDiv>
+                            
+                            <CountryInfoDiv>
+                              <CountryInfoTitle day={day}>Region:</CountryInfoTitle>
+                              <CountryInfo day={day}>{country.region}</CountryInfo>
+                            </CountryInfoDiv>
+                            
+                            <CountryInfoDiv>
+                              <CountryInfoTitle day={day}>Capital:</CountryInfoTitle>
+                              <CountryInfo day={day}>{country.capital}</CountryInfo>
+                            </CountryInfoDiv>
+                          </div>
+                        </div>
+                      </div>)}}
+                      
+                      // Asia 
+                      else if(asiaRender) {
+                        if(country.region === 'Asia') {
+                          return (
+                            <div
+                              className="country" key={Math.random()}
+                              style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
+                            >
+                              <img
+                                src={country.flags.png}
+                                alt="flag"
+                              />
+                  
+                              {/* Country Information  */}
+                              <div className="about-div">             
+                                <div className="about">
+                                  <h1 style={{ color: day ? "#111517" : "#FFF" }}>
+                                    {country.name.common}
+                                  </h1>
+                                  <CountryInfoDiv>
+                                    <CountryInfoTitle day={day}>Population:</CountryInfoTitle>
+                                    <CountryInfo day={day}>{country.population}</CountryInfo>
+                                  </CountryInfoDiv>
+                                  
+                                  <CountryInfoDiv>
+                                    <CountryInfoTitle day={day}>Region:</CountryInfoTitle>
+                                    <CountryInfo day={day}>{country.region}</CountryInfo>
+                                  </CountryInfoDiv>
+                                  
+                                  <CountryInfoDiv>
+                                    <CountryInfoTitle day={day}>Capital:</CountryInfoTitle>
+                                    <CountryInfo day={day}>{country.capital}</CountryInfo>
+                                  </CountryInfoDiv>
+                                </div>
+                              </div>
+                            </div>)}}
+
+                            // Europe 
+                            else if(europeRender) {
+                              if(country.region === 'Europe') {
+                                return (
+                                  <div
+                                    className="country" key={Math.random()}
+                                    style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
+                                  >
+                                    <img
+                                      src={country.flags.png}
+                                      alt="flag"
+                                    />
+                        
+                                    {/* Country Information  */}
+                                    <div className="about-div">             
+                                      <div className="about">
+                                        <h1 style={{ color: day ? "#111517" : "#FFF" }}>
+                                          {country.name.common}
+                                        </h1>
+                                        <CountryInfoDiv>
+                                          <CountryInfoTitle day={day}>Population:</CountryInfoTitle>
+                                          <CountryInfo day={day}>{country.population}</CountryInfo>
+                                        </CountryInfoDiv>
+                                        
+                                        <CountryInfoDiv>
+                                          <CountryInfoTitle day={day}>Region:</CountryInfoTitle>
+                                          <CountryInfo day={day}>{country.region}</CountryInfo>
+                                        </CountryInfoDiv>
+                                        
+                                        <CountryInfoDiv>
+                                          <CountryInfoTitle day={day}>Capital:</CountryInfoTitle>
+                                          <CountryInfo day={day}>{country.capital}</CountryInfo>
+                                        </CountryInfoDiv>
+                                      </div>
+                                    </div>
+                                  </div>)}}
+
+                                  // Oceania 
+                                  else if(oceaniaRender) {
+                                    if(country.region === 'Oceania') {
+                                      return (
+                                        <div
+                                          className="country" key={Math.random()}
+                                          style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
+                                        >
+                                          <img
+                                            src={country.flags.png}
+                                            alt="flag"
+                                          />
+                              
+                                          {/* Country Information  */}
+                                          <div className="about-div">             
+                                            <div className="about">
+                                              <h1 style={{ color: day ? "#111517" : "#FFF" }}>
+                                                {country.name.common}
+                                              </h1>
+                                              <CountryInfoDiv>
+                                                <CountryInfoTitle day={day}>Population:</CountryInfoTitle>
+                                                <CountryInfo day={day}>{country.population}</CountryInfo>
+                                              </CountryInfoDiv>
+                                              
+                                              <CountryInfoDiv>
+                                                <CountryInfoTitle day={day}>Region:</CountryInfoTitle>
+                                                <CountryInfo day={day}>{country.region}</CountryInfo>
+                                              </CountryInfoDiv>
+                                              
+                                              <CountryInfoDiv>
+                                                <CountryInfoTitle day={day}>Capital:</CountryInfoTitle>
+                                                <CountryInfo day={day}>{country.capital}</CountryInfo>
+                                              </CountryInfoDiv>
+                                            </div>
+                                          </div>
+                                        </div>)}}
+      })} 
+     </div>  {/* Countries Container End */}
+
+        
+        </div>}
       </div>
 
 

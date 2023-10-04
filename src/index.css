@@ -74,17 +74,17 @@
   }
 
   .filter-div {
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: flex-start;
+    position: absolute;
+    z-index: 2;
   }
 
   .filter-container {
     margin-top: 40px;
     width: 65%;
     height: max-content;
-    position: relative;
-    z-index: 2;
   }
 
   .filter {
@@ -119,19 +119,17 @@
   }
 
   .countries-container {
-    width: 90%;
+    width: 100%;
     height: max-content;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 40px;
-    position: absolute;
-    z-index: 0;
-    top: 285px;
+    margin-top: 130px;
   }
 
   .country {
-    width: 80%;
+    width: 264px;
     height: 325px;
     border-radius: 5px;
     box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.03);
@@ -248,5 +246,9 @@
   .border-countries {
     font-family: 'Nunito Sans';
     font-size: 14px;
+  }
+
+  .result {
+    width: 100%;
   }
 }
