@@ -251,4 +251,12 @@
     font-size: 24px;
     font-weight: 800;
   }
+
+  a {
+    text-decoration: none;
+  }
+
+  /* .country-div {
+    display: none;
+  } */
 }

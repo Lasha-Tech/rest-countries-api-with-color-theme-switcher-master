@@ -22,7 +22,7 @@ function App() {
       {/* Route  */}
       <Routes>
         <Route path="/" element={<Navigate to='/Home'/>}/>
-        <Route path="/Country/:name"
+        <Route path="/Country"
         element={<Country day={day}/>}
         />
       </Routes>

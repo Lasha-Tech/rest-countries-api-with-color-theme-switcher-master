@@ -1,12 +1,20 @@
 import styled, { css } from "styled-components";
 import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-const Country = ({ day }) => {
-  const {name} = useParams();
+const Country = ({ day, name }) => {
+  const [result, setResult] = useState(true)
+  const [error, setError] = useState(false)
+  // const {name} = useParams();
 
+
+console.log(name)
   return (
     <div className="country-home">
-      {/* Back Button  */}
+      {/* Result  */}
+      {result && 
+      <div className="result">
+        {/* Back Button  */}
       <Link to='/Home'>
       <div
         className="back"
@@ -28,19 +36,17 @@ const Country = ({ day }) => {
         <p style={{ color: day ? "#111517" : "#FFF" }}>Back</p>
       </div>
       </Link>
-
-      {/* Flag  */}
+        {/* Flag  */}
       <img
         className="country-flag"
         src="https://s3-alpha-sig.figma.com/img/dfb7/6a9f/4829ccead8b50a47638ac3648f0aec0c?Expires=1697414400&Signature=WBx849ebsKTHmeo66~V3lWXhJ5FTPy14anRNU~Aw47Q6MJhkriYm6qLUop3c85VcJGzwiMjrD-ml8vZuCYjrOrc~3YtNvrEWtNp10~Y3FFgEi7m5XEStmgfVr3ebljeUQZR-LeOVnU6jP~YD2WCbfqKd6K2addTvGQAKhz6sIvYq9dJlkbVV1Cy16W9gwEtC3XD97zm6O8KNlCzmMzfQKzwfMadHS4cqqLw7kZCZyulAd1hvKP8cOu~ZX3fXfAmcrXNJii9pzwbdAO0X0GSDRrJJQVwRe1YDymSzHQCNYLxOgW0EcEpjbLY9g1oqL3qHb3l2S-ngMQimhsUYGtCI0A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
         alt="flag"
       />
-      {/* Name  */}
+        {/* Country Name  */}
       <p className="country-name" style={{ color: day ? "#111517" : "#FFF" }}>
-        United States Of America
+        {name}
       </p>
-      {/* Country Information */}
-      {/* Header  */}
+        {/* Country Information  */}
       <div className="country-header">
         <CountryInfoDiv>
           <CountryInfoTitle day={day}>Native Name:</CountryInfoTitle>
@@ -68,7 +74,6 @@ const Country = ({ day }) => {
         </CountryInfoDiv>
       </div>
 
-      {/* Main  */}
       <div className="country-main">
         <CountryInfoDiv>
           <CountryInfoTitle day={day}>Top Level Domain:</CountryInfoTitle>
@@ -86,7 +91,6 @@ const Country = ({ day }) => {
         </CountryInfoDiv>
       </div>
 
-      {/* Footer  */}
       <div className="country-footer">
         <h1
           className="border-countries-title"
@@ -103,7 +107,15 @@ const Country = ({ day }) => {
             <p style={{ color: day ? "#111517" : "#FFF" }}>Georgia</p>
           </div>
         </div>
-      </div>
+        </div>
+      </div>}
+
+      {/* Error  */}
+      {error &&
+      <p className='error-message' style={{color: day? "#111517" : "#FFF"}}>
+      Countries Not Found
+      </p>
+      }
     </div>
   );
 };

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import styled, { css } from "styled-components";
 import axios from "axios";
+import Country from "./Country";
 import { Link } from "react-router-dom";
 
+
 const Home = ({day}) => {
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState('')
     const [region, setRegion] = useState("Filter by Region")
     const [list, setList] = useState(false)
     const [allRender, setAllRender] = useState(true)
@@ -13,10 +15,12 @@ const Home = ({day}) => {
     const [asiaRender, setAsiaRender] = useState(false)
     const [europeRender, setEuropeRender] = useState(false)
     const [oceaniaRender, setOceaniaRender] = useState(false)
-    const [all, setAll] = useState([]);
-    const [filteredCountries, setFilteredCountries] = useState([]);
+    const [all, setAll] = useState([])
+    const [filteredCountries, setFilteredCountries] = useState([])
     const [result, setResult] = useState(true)
     const [error, setError] = useState(false)
+    const [countryName, setCountryName] = useState('')
+    const [countryInformation, setCountryInformation] = useState()
 
   const getData = async () => {
       try {
@@ -32,7 +36,24 @@ const Home = ({day}) => {
         setError(true)
       }
     }
+
+//     const getCountryInfo = async () => {
+//       try {
+//         const data = await axios.get('https://restcountries.com/v3.1/name/' + countryName)
+//         setCountryInformation(data)
+
+//         if(data.status !== 404) {
+//           setResult(true)
+//           setError(false)
+//         }
+//       } catch (error) {
+//         setResult(false)
+//         setError(true)
+//       }
+//     }
     
+// console.log(countryInformation)
+
 // Filter Click Events 
 const africaRenderClick = () => {
 setAllRender(false)
@@ -234,9 +255,9 @@ useEffect(() => {
       <div className="countries-container">
       {filteredCountries.map((country) => {
         return (
-          <Link to='/Country'>
+          <Link to='/Country' key={Math.random()}>
         <div
-          className="country" key={Math.random()}
+          className="country" onClick={() => {setCountryName(country.name.common)}}
           style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
         >
           <img
@@ -278,6 +299,10 @@ useEffect(() => {
       Countries Not Found
       </p>
       }
+
+      {/* <div className="country-div">
+        <Country day={day} name={countryName}/>
+      </div> */}
       </div>
   );
 }
