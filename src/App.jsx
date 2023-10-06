@@ -16,13 +16,13 @@ function App() {
       {/* Header  */}
       <Header day={day} click={() => setDay(!day)}/>
 
-      {/* Main  */}
-      <Home day={day}/>
-
       {/* Route  */}
       <Routes>
         <Route path="/" element={<Navigate to='/Home'/>}/>
-        <Route path="/Country"
+        <Route path="/Home"
+        element={<Home day={day}/>}
+        />
+        <Route path="/Country/:countryName"
         element={<Country day={day}/>}
         />
       </Routes>
