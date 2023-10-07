@@ -154,6 +154,8 @@ useEffect(() => {
       <div className="main">
       {result &&
       <div className="result">
+      {/* Header  */}
+      <div className="header-container">
       {/* Search  */}
       <div
         className="input-div"
@@ -232,8 +234,11 @@ useEffect(() => {
         </div>
         </div>
 
+        </div>
+
       {/* Countries */}
-      <div className="countries-container">
+      <div className="countries">
+      <div className="countries-container" style={{ backgroundColor: day ? "#FAFAFA" : "#202C36" }}>
       {filteredCountries.map((country) => {
         return (
           <Link to={'/Country/' + country.cca3} key={Math.random()}>
@@ -272,7 +277,9 @@ useEffect(() => {
         </Link>
         )})} 
       </div>
+      </div>
       </div>}
+      
 
       {/* Error  */}
       {error &&

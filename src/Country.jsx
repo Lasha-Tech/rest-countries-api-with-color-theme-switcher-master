@@ -53,92 +53,104 @@ useEffect(() => {
       </div>
       </Link>
 
-      {/* Flag  */}
-      <img
-        className="country-flag"
-        src={countryInformation? countryInformation.flags.png: null}
-        alt="flag"
-      />
-
-        {/* Country Name  */}
-      <p className="country-name" style={{ color: day ? "#111517" : "#FFF" }}>
-        {countryInformation? countryInformation.name.common: null}
-      </p>
-
-        {/* Country Information  */}
-      <div className="country-header">
-        <CountryInfoDiv>
-          <CountryInfoTitle day={day}>Native Name:</CountryInfoTitle>
-          {countryInformation &&
-           <CountryDetails target={countryInformation.name.nativeName} value='official' countryInformation={countryInformation} day={day}/>}
-        </CountryInfoDiv>
-
-        <CountryInfoDiv>
-          <CountryInfoTitle day={day}>Population:</CountryInfoTitle>
-          <CountryInfo day={day}>{countryInformation? countryInformation.population : null}</CountryInfo>
-        </CountryInfoDiv>
-
-        <CountryInfoDiv>
-          <CountryInfoTitle day={day}>Region:</CountryInfoTitle>
-          <CountryInfo day={day}>{countryInformation? countryInformation.region : null}</CountryInfo>
-        </CountryInfoDiv>
-
-        <CountryInfoDiv>
-          <CountryInfoTitle day={day}>Sub Region:</CountryInfoTitle>
-          <CountryInfo day={day}>{countryInformation? countryInformation.subregion : null}</CountryInfo>
-        </CountryInfoDiv>
-
-        <CountryInfoDiv>
-          <CountryInfoTitle day={day}>Capital:</CountryInfoTitle>
-          <CountryInfo day={day}>{countryInformation? countryInformation.capital[0] : null}</CountryInfo>
-        </CountryInfoDiv>
-      </div>
-
-      <div className="country-main">
-        <CountryInfoDiv>
-          <CountryInfoTitle day={day}>Top Level Domain:</CountryInfoTitle>
-          <CountryInfo day={day}>{countryInformation? countryInformation.tld[0] : null}</CountryInfo>
-        </CountryInfoDiv>
+      {/* Country Main  */}
+      <div className="country-info-container">
+        {/* Flag  */}
+        <img
+          className="country-flag"
+          src={countryInformation? countryInformation.flags.png: null}
+          alt="flag"
+        />
         
-        <CountryInfoDiv>
-          <CountryInfoTitle day={day}>Currencies:</CountryInfoTitle>
-          {countryInformation &&
-           <CountryDetails target={countryInformation.currencies} value='name' countryInformation={countryInformation} day={day}/>}
-        </CountryInfoDiv>
+        <div className="country-home-container">
+        <div className="country-main-container">
+          {/* Header  */}
+        <div className="country-header-container">
+          {/* Country Name  */}
+        <p className="country-name" style={{ color: day ? "#111517" : "#FFF" }}>
+          {countryInformation? countryInformation.name.common: null}
+        </p>
 
-        <CountryInfoDiv>
-          <CountryInfoTitle day={day}>Languages:</CountryInfoTitle>
+          {/* Country Information  */}
+        <div className="country-header">
+          <CountryInfoDiv>
+            <CountryInfoTitle day={day}>Native Name:</CountryInfoTitle>
+            {countryInformation &&
+            <CountryDetails target={countryInformation.name.nativeName} value='official' countryInformation={countryInformation} day={day}/>}
+          </CountryInfoDiv>
+
+          <CountryInfoDiv>
+            <CountryInfoTitle day={day}>Population:</CountryInfoTitle>
+            <CountryInfo day={day}>{countryInformation? countryInformation.population : null}</CountryInfo>
+          </CountryInfoDiv>
+
+          <CountryInfoDiv>
+            <CountryInfoTitle day={day}>Region:</CountryInfoTitle>
+            <CountryInfo day={day}>{countryInformation? countryInformation.region : null}</CountryInfo>
+          </CountryInfoDiv>
+
+          <CountryInfoDiv>
+            <CountryInfoTitle day={day}>Sub Region:</CountryInfoTitle>
+            <CountryInfo day={day}>{countryInformation? countryInformation.subregion : null}</CountryInfo>
+          </CountryInfoDiv>
+
+          <CountryInfoDiv>
+            <CountryInfoTitle day={day}>Capital:</CountryInfoTitle>
+            <CountryInfo day={day}>{countryInformation? countryInformation.capital[0] : null}</CountryInfo>
+          </CountryInfoDiv>
+        </div>
+        </div>
+
+        <div className="country-main">
+          <CountryInfoDiv>
+            <CountryInfoTitle day={day}>Top Level Domain:</CountryInfoTitle>
+            <CountryInfo day={day}>{countryInformation? countryInformation.tld[0] : null}</CountryInfo>
+          </CountryInfoDiv>
+          
+          <CountryInfoDiv>
+            <CountryInfoTitle day={day}>Currencies:</CountryInfoTitle>
+            {countryInformation &&
+            <CountryDetails target={countryInformation.currencies} value='name' countryInformation={countryInformation} day={day}/>}
+          </CountryInfoDiv>
+
+          <CountryInfoDiv>
+            <CountryInfoTitle day={day}>Languages:</CountryInfoTitle>
+            {countryInformation &&
+            <CountryDetails target={countryInformation.languages} value='' countryInformation={countryInformation} day={day}/>}
+          </CountryInfoDiv>
+        </div>
+        </div>
+
+        <div className="country-footer">
+          <h1
+            className="border-countries-title"
+            style={{ color: day ? "#111517" : "#FFF" }}
+          >
+            Border Countries: 
+          </h1>
+
+          <div className="border-countries-container">
           {countryInformation &&
-           <CountryDetails target={countryInformation.languages} value='' countryInformation={countryInformation} day={day}/>}
-        </CountryInfoDiv>
+          countryInformation.hasOwnProperty('borders')?
+          countryInformation.borders.map(country => {
+            return (
+              <Link to={'/Country/' + country} key={Math.random()}>
+              <div
+                className="border-countries"
+                style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
+              >
+                <p style={{ color: day ? "#111517" : "#FFF" }}>{country}</p>
+              </div>
+              </Link>
+              )
+          }): <p className="null">0</p>
+          }
+          </div>
+          </div>
+
+          </div>
       </div>
 
-      <div className="country-footer">
-        <h1
-          className="border-countries-title"
-          style={{ color: day ? "#111517" : "#FFF" }}
-        >
-          Border Countries: 
-        </h1>
-
-        <div className="border-countries-container">
-        {countryInformation &&
-        countryInformation.hasOwnProperty('borders')?
-        countryInformation.borders.map(country => {
-          return (
-            <Link to={'/Country/' + country} key={Math.random()}>
-            <div
-              className="border-countries"
-              style={{ backgroundColor: day ? "#FFF" : "#2B3844" }}
-            >
-              <p style={{ color: day ? "#111517" : "#FFF" }}>{country}</p>
-            </div>
-            </Link>
-            )
-        }): <p className="null">0</p>
-        }
-        </div>
-        </div>
       </div>
     </div>
   );
@@ -146,6 +158,7 @@ useEffect(() => {
 
 export default Country;
 
+// Styled Components 
 const CountryInfoDiv = styled.div(
   (props) => css`
     @media (min-width: 375px) {
